@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load widget_tweaks %}
+
+
+{% block title %}
+    login
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron bg-light">
+            <h1 class="display-4">Login</h1>
+            <p class="lead">Please, use the following form to log-in. If you don't have an
+                account <a href="{% url "register" %}">register here</a>
+            </p>
+            <hr class="my-4">
+            <form action="" method="POST">
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+
+                {% for field in form %}
+                    <div class="form-group col-4">
+                        {{field.label}}
+                        {% render_field field class+="form-control" %}
+                    </div>
+                    {% for error in field.errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                <input class="btn btn-success btn-lg" type="submit" value="Login"></input>
+            </form>
+        </div>
+        <p><a href="{% url 'password_reset' %}">Forgotten your password?</a></p>
+    </div>
+{% endblock %}
