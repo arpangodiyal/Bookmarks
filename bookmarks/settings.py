@@ -25,7 +25,7 @@ SECRET_KEY = '^=7=11gk=b2)eg*z)vbp7vc=_lm5iz(0b*!-2ej6p@_u(!e8$y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'account',
     'widget_tweaks',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -64,6 +65,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -137,3 +140,25 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.yahoo.YahooOpenId',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '720693179678-ipbj0rveaq4h4e3sfnl8sfdsfha683bl.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '3ID0fJyU6-nTNKs0qzn9q2Xt'
+
+SOCIAL_AUTH_FACEBOOK_KEY = '450021562468997'
+SOCIAL_AUTH_FACEBOOK_SECRET = 'acb7b5003b20d528b0b396689aedfd54'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['godiyal.arpan@yahoo.in']
+
+SOCIAL_AUTH_GITHUB_KEY = 'b40efb7b0901b49e3470'
+SOCIAL_AUTH_GITHUB_SECRET = '90375726955226272983236e1d0a0953806156e6'
+

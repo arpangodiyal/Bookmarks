@@ -31,18 +31,22 @@ def dashboard(request):
 
 @login_required
 def edit(request):
-    if request.method == 'POST':
-        user_form = UserEditForm(data=request.POST, instance=request.user)
-        profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
-        if user_form.is_valid() and profile_form.is_valid():
-            user_form.save()
-            profile_form.save()
-            messages.success(request, 'Profile updated successfully')
-            return redirect('dashboard')
-        messages.error(request, 'Something went wrong')
-    else:
-        user_form = UserEditForm(instance=request.user)
-        profile_form = ProfileEditForm(instance=request.user.profile)
+    try:
+        if request.method == 'POST':
+            user_form = UserEditForm(data=request.POST, instance=request.user)
+            profile_form = ProfileEditForm(request.POST, request.FILES, instance=request.user.profile)
+            if user_form.is_valid() and profile_form.is_valid():
+                user_form.save()
+                profile_form.save()
+                messages.success(request, 'Profile updated successfully')
+                return redirect('dashboard')
+            messages.error(request, 'Something went wrong')
+        else:
+            user_form = UserEditForm(instance=request.user)
+            profile_form = ProfileEditForm(instance=request.user.profile)
 
-    return render(request,'edit.html',{'user_form': user_form,'profile_form': profile_form})
+        return render(request,'edit.html',{'user_form': user_form,'profile_form': profile_form})
+
+    except:
+        return HttpResponse('Not found')
 
